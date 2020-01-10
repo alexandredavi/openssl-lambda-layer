@@ -1,7 +1,7 @@
 #!/bin/sh
-rm layer.zip
-docker run --rm -v "$PWD":/tmp/layer lambci/yumda:2 bash -c "
-  yum install -y openssl && \
-  cd /lambda/opt && \
-  zip -yr /tmp/layer/layer.zip .
-"
+
+rm layer/layer.zip
+
+docker image build -t openssl-layer .
+
+docker run --rm -v "$PWD"layer/:/tmp/layer openssl-layer
