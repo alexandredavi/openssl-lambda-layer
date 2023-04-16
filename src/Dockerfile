@@ -1,4 +1,4 @@
-FROM amazonlinux
+FROM amazonlinux:2
 
 RUN yum install openssl11 -y
 RUN yum install zip -y
