@@ -1,6 +1,7 @@
 #!/bin/sh
 
 rm layer/layer.zip
+mkdir layer
 
 docker image build --platform linux/amd64 -t openssl-layer .
 
