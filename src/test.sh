@@ -4,7 +4,9 @@ DOCKER_ARGS=$@
 
 LAMBDA_RUNTIMES="public.ecr.aws/lambda/python:3.12 public.ecr.aws/lambda/nodejs:latest"
 
-rm -rf layer/files && unzip layer/layer.zip -d layer/files
+LAYER_ZIP=$(ls layer/layer-*.zip | tail -n 1)
+
+rm -rf layer/files && unzip $LAYER_ZIP -d layer/files
 
 # Overriding LD_LIBRARY_PATH required for nodejs image to bypass the .so files already present there
 for runtime in $LAMBDA_RUNTIMES
