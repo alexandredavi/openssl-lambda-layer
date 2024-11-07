@@ -1,15 +1,12 @@
-FROM amazonlinux:2
+FROM amazonlinux:2023
 
-RUN yum install openssl11 -y
-RUN yum install zip -y
+RUN dnf -y install zip
+RUN dnf -y install openssl
+
 RUN mkdir -p /tmp/layer
 
-CMD cd /tmp/layer && \
-    mkdir -p bin && \
-    mkdir -p lib && \
-    cp /bin/openssl11 ./bin/openssl && \
-    cp /usr/lib64/libbz2.so.1 ./lib && \
-    cp /usr/lib64/libssl.so.1.1 ./lib && \
-    cp /usr/lib64/libcrypto.so.1.1 ./lib && \
-    zip -r layer.zip ./* && \
-    rm -rf lib bin
+COPY build-layer.sh build-layer.sh
+
+ENTRYPOINT ["/bin/bash"]
+
+CMD ["build-layer.sh"]
